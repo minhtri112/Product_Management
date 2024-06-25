@@ -133,9 +133,9 @@ module.exports.createProduct = async (req, res) => {
     }
 
 
-   if(req.file){
-    req.body.thumbnail = `/uploads/${req.file.filename}`;
-   }
+//    if(req.file){
+//     req.body.thumbnail = `/uploads/${req.file.filename}`;
+//    }
 
 
     const product = new Product(req.body);
