@@ -1,0 +1,27 @@
+extends ../../layouts/default.pug
+
+block main
+    h1(class = "mb-3") Thông tin chi tiết 
+  
+    if(user.avatar)
+    img(src = user.avatar width = "150px" class = "mb-3")
+
+    if(user.fullName)
+    p Họ tên : <b>#{user.fullName}</b>
+
+    if(user.phone)
+    p Số điện thoại : <b>#{user.phone}</b>
+
+    span Trạng thái 
+    span()
+      <b class = "mb-3" >#{user.status === "active" ? "Hoạt động" : "Dừng hoạt đông"}</b>
+
+
+    if(role.title)
+    p(class = "mt-3") Phân quyền <b>#{role.title}</b>
+
+
+    a(
+        href = `${prefixAdmin}/my-account/edit`
+        class = "btn btn-primary"
+    ) Chỉnh sửa thông tin

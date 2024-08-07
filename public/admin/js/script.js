@@ -20,6 +20,31 @@ if (buttonStatus.length > 0) {
 
 // End Button Status
 
+
+// Change Status
+const buttonChangeStatus = document.querySelectorAll("[button-change-status]");
+if(buttonChangeStatus.length > 0){
+    const fromChangeStatus = document.querySelector("#form-change-status");
+    console.log(fromChangeStatus);
+    const path = fromChangeStatus.getAttribute("data-path");
+    
+    buttonChangeStatus.forEach(button =>{
+        button.addEventListener("click",()=>{
+            const statusCurrent = button.getAttribute("data-status");
+            const id = button.getAttribute("data-id");
+
+            let statusChange = statusCurrent == "active" ? "inactive" : "active";
+
+            const action = path + `/${statusChange}/${id}?_method=PATCH`;
+
+            fromChangeStatus.action = action
+
+            fromChangeStatus.submit() 
+        })
+    })
+}
+// End Change Status
+
 // From search
 const formSearch = document.querySelector("#form-search");
 if (formSearch) {
@@ -137,8 +162,8 @@ if (formChangeMulti) {
 
 
 // Delete Item
+
 const buttonsDelete = document.querySelectorAll("[button-delete-item]");
-console.log(buttonsDelete);
 if(buttonsDelete.length > 0){
     const formDeleteItem = document.querySelector("#form-delete-item");
     const path = formDeleteItem.getAttribute("data-path");
@@ -156,6 +181,9 @@ if(buttonsDelete.length > 0){
         })
     })
 }
+
+
+
 // End Delete Item
 
 // Show Alert
@@ -188,3 +216,40 @@ if(uploadImage){
     });
 }
 // End Upload Image
+
+
+
+// Sort
+const sort = document.querySelector("[sort]");
+if(sort){
+    const sortSelect = sort.querySelector("[sort-select]");
+    const sortClear = sort.querySelector("[sort-clear]");
+    let url = new URL(window.location.href);
+
+    sortSelect.addEventListener("change",(e)=>{
+        const value = sortSelect.value;
+        const [sortKey,sortValue] = value.split("-");
+        url.searchParams.set("sortKey",sortKey);
+        url.searchParams.set("sortValue",sortValue);
+
+        window.location.href = url.href;
+    });
+
+    sortClear.addEventListener("click",()=>{
+        url.searchParams.delete("sortValue");
+        url.searchParams.delete("sortKey");
+        window.location.href = url.href;
+    })
+
+
+    // Thêm select cho option
+    const sortKey = url.searchParams.get("sortKey");
+    const sortValue = url.searchParams.get("sortValue");
+
+    if(sortKey && sortValue){
+        const stringSort = `${sortKey}-${sortValue}`;
+        const optionSelected = sortSelect.querySelector(`option[value=${stringSort}]`);
+        optionSelected.selected = true;
+    }
+}
+// End Sort

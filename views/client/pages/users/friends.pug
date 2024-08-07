@@ -1,0 +1,36 @@
+extends ../../layouts/default
+include ../../mixins/box-head.pug
+include ../../mixins/product-layout.pug
+
+block main
+  .container.my-3
+    include ../../partials/list-btn-users.pug
+
+    .row
+     .col-12
+       +box-head("Bạn bè")
+
+    .row(data-user-friend)
+      each item in users
+        .col-6(user_id = item.id) 
+            div(class = "box-user")
+              div(class = "inner-avatar")
+                img(src = item.avatar ? item.avatart : "https://png.pngtree.com/png-clipart/20190922/original/pngtree-business-male-user-avatar-vector-png-image_4774078.jpg" alt = "Minh Trí")
+              
+              div(class = "inner-info")
+                div(class = "inner-name") #{item.fullName}
+                div(class = "inner-button")
+                  a(
+                    href = `/chat/${item.room_chat_id}`
+                    class = "btn btn-sm btn-primary mr-1"
+                  ) Nhắn tin
+              div(
+                class = "inner-status"
+                status = item.statusOnline 
+              ) <i class="fa-solid fa-circle"></i>
+
+  block script 
+     script( type="module" src="/js/users.js")
+
+      
+                    

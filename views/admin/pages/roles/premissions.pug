@@ -1,0 +1,149 @@
+extends ../../layouts/default.pug
+include ../../mixins/alert.pug
+include ../../mixins/select-tree.pug
+
+block main
+   if(role.premissions.includes("roles_permissions"))
+      +alert-error("5000")
+      +alert-success("5000")
+      h1(class = "mb-4") Phân quyền
+
+
+      div(class = "text-right")
+         button(
+         type = "submit"
+         class = "btn btn-primary mb-5 mr-10"
+         button-submit
+         ) Cập nhật
+
+      
+      table(
+         class = "table table-hover table-sm"
+         table-permission
+      )
+         thead 
+               tr 
+                  th Tính năng
+                  each item in records
+                     th(class = "text-center" ) #{item.title}
+         
+         tbody
+               tr(data-name = "id" class="d-none")
+                  td
+                  each item in records
+                     td(class = "text-center")
+                        input(type="text" value = item.id)
+               //- Danh mục sản phẩm
+               tr
+                  td(colspan="4" style = "font-weight: 500") Danh mục sản phẩm
+               tr(data-name = "products-category_view")
+                  td() Xem
+                  each item in records
+                     td(class = "text-center")
+                        input(type="checkbox" checked = (item.premissions.includes("products-category_view")))          
+               tr(data-name = "products-category_create")
+                  td() Thêm mới
+                  each item in records
+                     td(class = "text-center")
+                        input(type="checkbox" checked = (item.premissions.includes("products-category_create")))         
+               tr(data-name = "products-category_edit")
+                  td() Chỉnh sửa
+                  each item in records
+                     td(class = "text-center")
+                        input(type="checkbox" checked = (item.premissions.includes("products-category_edit")))     
+               tr(data-name = "products-category_delete")
+                  td() Xóa
+                  each item in records
+                     td(class = "text-center")
+                        input(type="checkbox" checked = (item.premissions.includes("products-category_delete")))
+               //- Sản phẩm
+               tr
+                  td(colspan="4" style = "font-weight: 500") Sản phẩm
+               tr(data-name = "products_view")
+                  td() Xem
+                  each item in records
+                     td(class = "text-center")
+                        input(type="checkbox" checked = (item.premissions.includes("products_view")))          
+               tr(data-name = "products_create")
+                  td() Thêm mới
+                  each item in records
+                     td(class = "text-center")
+                        input(type="checkbox" checked = (item.premissions.includes("products_create")))         
+               tr(data-name = "products_edit")
+                  td() Chỉnh sửa
+                  each item in records
+                     td(class = "text-center")
+                        input(type="checkbox" checked = (item.premissions.includes("products_edit")))     
+               tr(data-name = "products_delete")
+                  td() Xóa
+                  each item in records
+                     td(class = "text-center")
+                        input(type="checkbox" checked = (item.premissions.includes("products_delete")))
+               //- Nhóm quyền
+               tr
+                  td(colspan="4" style = "font-weight: 500") Nhóm quyền
+               tr(data-name = "roles_view")
+                  td() Xem
+                  each item in records
+                     td(class = "text-center")
+                        input(type="checkbox" checked = (item.premissions.includes("roles_view")))          
+               tr(data-name = "roles_create")
+                  td() Thêm mới
+                  each item in records
+                     td(class = "text-center")
+                        input(type="checkbox" checked = (item.premissions.includes("roles_create")))         
+               tr(data-name = "roles_edit")
+                  td() Chỉnh sửa
+                  each item in records
+                     td(class = "text-center")
+                        input(type="checkbox" checked = (item.premissions.includes("roles_edit")))     
+               tr(data-name = "roles_delete")
+                  td() Xóa
+                  each item in records
+                     td(class = "text-center")
+                        input(type="checkbox" checked = (item.premissions.includes("roles_delete")))
+               tr(data-name = "roles_permissions")
+                  td() Phân quyền
+                  each item in records
+                     td(class = "text-center")
+                        input(type="checkbox" checked = (item.premissions.includes("roles_permissions")))
+               //- Tài khoản
+               tr
+                  td(colspan="4" style = "font-weight: 500") Tài khoản
+               tr(data-name = "permission_view")
+                  td() Xem
+                  each item in records
+                     td(class = "text-center")
+                        input(type="checkbox" checked = (item.premissions.includes("permission_view")))          
+               tr(data-name = "permission_create")
+                  td() Thêm mới
+                  each item in records
+                     td(class = "text-center")
+                        input(type="checkbox" checked = (item.premissions.includes("permission_create")))         
+               tr(data-name = "permission_edit")
+                  td() Chỉnh sửa
+                  each item in records
+                     td(class = "text-center")
+                        input(type="checkbox" checked = (item.premissions.includes("permission_edit")))     
+               tr(data-name = "permission_delete")
+                  td() Xóa
+                  each item in records
+                     td(class = "text-center")
+                        input(type="checkbox" checked = (item.premissions.includes("permission_delete")))
+      
+      
+      form(
+         action = `${prefixAdmin}/roles/premissions?_method=PATCH`
+         method = "POST"
+         id = "form-change-premissions"
+      )
+         div(class = "form-group")
+               input(
+                  type = "text"
+                  class = "form-control d-none"
+                  name='permissions'
+                  value = ''
+               )    
+      script(src="/admin/js/roles.js")
+
+      

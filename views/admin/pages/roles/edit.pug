@@ -1,0 +1,42 @@
+extends ../../layouts/default.pug
+include ../../mixins/alert.pug
+include ../../mixins/select-tree.pug
+
+block main 
+   if(role.premissions.includes("roles_edit"))
+    +alert-error("5000")
+    h1(class = "mb-4") Thêm mới một danh mục
+
+    form(
+        action = `${prefixAdmin}/roles/edit/${data.id}?_method=PATCH`
+        method = "POST"
+        enctype="multipart/form-data"
+        )
+            div(class = "form-group")
+                label(for="title") Tiêu đề
+                input(
+                    type="text"
+                    class = "form-control"
+                    id = "title"
+                    name = "title"
+                    require
+                    value = data.title
+            )
+            div(class = "form-group")
+                label(for="desc") Mô tả
+                textarea(
+                    type="text"
+                    class = "form-control"
+                    id = "desc"
+                    name = "description"
+                    rows = "5"
+                ) #{data.description}
+            div(
+                class = "form-group"
+            )
+                button(
+                    type = "submit"
+                    class = "btn btn-primary"
+                ) Câp nhật
+            
+        
